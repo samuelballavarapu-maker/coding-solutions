@@ -11,7 +11,7 @@ Return the running sum of `nums`.
  
 
 Original
-C++
+C
  **Example 1:** 
 
 ```
@@ -45,24 +45,24 @@ Output: [3,4,6,16,17]
 
 ## Solution
 
-**Language:** C++  
+**Language:** C  
 **Runtime:** 0 ms (beats 100.00%)  
-**Memory:** 12.3 MB (beats 95.99%)  
-**Submitted:** 2026-11-23T09:29:59.393Z  
+**Memory:** 11.7 MB (beats 88.79%)  
+**Submitted:** 2026-11-28T07:19:35.873Z  
 
-```cpp
+```c
+int* runningSum(int* nums, int numsSize, int* returnSize) {
+    int* result = (int*)malloc(numsSize * sizeof(int));
+    int sum = 0;
 
-class Solution {
-public:
-    vector<int> runningSum(vector<int>& nums) {
-        for (int i = 1; i < nums.size(); i++) {
-            nums[i] = nums[i] + nums[i - 1];
-        }
-
-        return nums;
+    for (int i = 0; i < numsSize; i++) {
+        sum = sum + nums[i];
+        result[i] = sum;
     }
-};
 
+    *returnSize = numsSize;
+    return result;
+}
 ```
 
 ---
