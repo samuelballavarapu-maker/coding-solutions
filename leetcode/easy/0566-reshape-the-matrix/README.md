@@ -15,7 +15,7 @@ If the `reshape` operation with given parameters is possible and legal, output t
  
 
 Original
-C++
+C
  **Example 1:** 
 
 ```
@@ -44,34 +44,50 @@ Output: [[1,2],[3,4]]
 
 ## Solution
 
-**Language:** C++  
-**Runtime:** 1 ms (beats 47.75%)  
-**Memory:** 15 MB (beats 84.37%)  
-**Submitted:** 2026-11-23T09:33:31.560Z  
+**Language:** C  
+**Runtime:** 0 ms (beats 100.00%)  
+**Memory:** 15.9 MB (beats 34.69%)  
+**Submitted:** 2026-11-28T07:17:18.618Z  
 
-```cpp
+```c
+int** matrixReshape(int** mat, int matSize, int* matColSize, int r, int c, int* returnSize, int** returnColumnSizes) {
+    int m = matSize;
+    int n = matColSize[0];
 
-class Solution {
-public:
-    vector<vector<int>> matrixReshape(vector<vector<int>>& mat, int r, int c) {
-        int m = mat.size();
-        int n = mat[0].size();
-
-        // Check if reshaping is possible
-        if (m * n != r * c) {
-            return mat;
+    if (m * n != r * c) {
+        *returnSize = m;
+        *returnColumnSizes = (int*)malloc(m * sizeof(int));
+        for (int i = 0; i < m; i++) {
+            (*returnColumnSizes)[i] = n;
         }
-
-        vector<vector<int>> result(r, vector<int>(c));
-
-        for (int i = 0; i < m * n; i++) {
-            result[i / c][i % c] = mat[i / n][i % n];
-        }
-
-        return result;
+        return mat;
     }
-};
 
+    int** result = (int**)malloc(r * sizeof(int*));
+    *returnColumnSizes = (int*)malloc(r * sizeof(int));
+
+    for (int i = 0; i < r; i++) {
+        result[i] = (int*)malloc(c * sizeof(int));
+        (*returnColumnSizes)[i] = c;
+    }
+
+    int row = 0;
+    int col = 0;
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            result[row][col] = mat[i][j];
+            col++;
+            if (col == c) {
+                col = 0;
+                row++;
+            }
+        }
+    }
+
+    *returnSize = r;
+    return result;
+}
 ```
 
 ---
