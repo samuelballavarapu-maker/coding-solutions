@@ -11,7 +11,7 @@ The  **transpose**  of a matrix is the matrix flipped over its main diagonal, sw
  
 
 Original
-C++
+C
  **Example 1:** 
 
 ```
@@ -40,31 +40,33 @@ Output: [[1,4],[2,5],[3,6]]
 
 ## Solution
 
-**Language:** C++  
+**Language:** C  
 **Runtime:** 0 ms (beats 100.00%)  
-**Memory:** 15.1 MB (beats 54.42%)  
-**Submitted:** 2026-11-23T09:32:11.587Z  
+**Memory:** 15.8 MB (beats 63.78%)  
+**Submitted:** 2026-11-28T07:15:51.161Z  
 
-```cpp
+```c
+int** transpose(int** matrix, int matrixSize, int* matrixColSize, int* returnSize, int** returnColumnSizes) {
+    int rows = matrixSize;
+    int cols = matrixColSize[0];
 
-class Solution {
-public:
-    vector<vector<int>> transpose(vector<vector<int>>& matrix) {
-        int rows = matrix.size();
-        int cols = matrix[0].size();
+    int** result = (int**)malloc(cols * sizeof(int*));
+    *returnColumnSizes = (int*)malloc(cols * sizeof(int));
 
-        vector<vector<int>> result(cols, vector<int>(rows));
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                result[j][i] = matrix[i][j];
-            }
-        }
-
-        return result;
+    for (int i = 0; i < cols; i++) {
+        result[i] = (int*)malloc(rows * sizeof(int));
+        (*returnColumnSizes)[i] = rows;
     }
-};
 
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            result[j][i] = matrix[i][j];
+        }
+    }
+
+    *returnSize = cols;
+    return result;
+}
 ```
 
 ---
